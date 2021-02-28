@@ -1,0 +1,17 @@
+{
+    "type": "Feature",
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -6.316666,
+            49.916666
+        ]
+    },
+    "properties": {
+        "Id": "0001",
+        "Name": "ST. MARY'S",
+        "Country": "England",
+        "ContinuousHeightsAvailable": true,
+        "Footnote": null
+    }
+}
