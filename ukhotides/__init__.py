@@ -4,6 +4,7 @@ import logging
 from aiohttp import ClientSession
 from http import HTTPStatus
 from datetime import datetime
+from typing import List
 
 from .const import BASE_ENDPOINT, DISCOVERY_ENDPOINT, FOUNDATION_ENDPOINT, PREMIUM_ENDPOINT
 from .dataclasses import Station, TidalEvent, TidalHeight
@@ -45,7 +46,7 @@ class UkhoTides:
             
             return await resp.json()
 
-    async def async_get_stations(self, name: str = None) -> list[Station]:
+    async def async_get_stations(self, name: str = None) -> List[Station]:
         url = self._base_url
 
         if name is not None:
@@ -60,7 +61,7 @@ class UkhoTides:
         data = await self._async_get_data(url)
         return Station.from_dict(data)
 
-    async def async_get_tidal_events(self, station_id: str, duration: int = None) -> list[TidalEvent]:
+    async def async_get_tidal_events(self, station_id: str, duration: int = None) -> List[TidalEvent]:
         url = self._base_url + "/" + station_id + "/TidalEvents"
 
         if duration is not None:
@@ -70,7 +71,7 @@ class UkhoTides:
 
         return [TidalEvent.from_dict(e) for e in data]
         
-    async def async_get_tidal_events_for_date_range(self, station_id: str, start_date: datetime, end_date: datetime) -> list[TidalEvent]:
+    async def async_get_tidal_events_for_date_range(self, station_id: str, start_date: datetime, end_date: datetime) -> List[TidalEvent]:
         """Only available for premium subscriptions"""
 
         url = self._base_url + "/" + station_id + "/TidalEventsForDateRange?"

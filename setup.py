@@ -5,12 +5,12 @@ with open("README.md", "r") as fh:
 
 setup(
     name='ukhotides',
-    version='0.1.0',
+    version='1.0.0',
     description='Python library for interfacing with the UKHO Admiralty Tidal API',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/ianByrne/PyPI-ukhotides',
-    download_url='https://github.com/ianByrne/PyPI-ukhotides/archive/v0.1.0.tar.gz',
+    download_url='https://github.com/ianByrne/PyPI-ukhotides/archive/v1.0.0.tar.gz',
     author='Ian Byrne',
     author_email='ian.byrne@burnsie.com.au',
     license='MIT',
