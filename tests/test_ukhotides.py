@@ -12,10 +12,9 @@ from aioresponses import aioresponses
 from datetime import datetime
 
 
-def read_resource(filename):
+def load_resource(filename):
     pwd = os.path.abspath(os.path.dirname(__file__))
-    file = os.path.join(pwd, filename)
-    print("resource "+file)
+    file = os.path.join(pwd, 'resources', filename)
     with open(file) as f:
         return json.load(f)
 
@@ -30,37 +29,37 @@ def mock_session():
 @pytest.fixture
 def mock_stations_data():
     """Example response from stations API"""
-    return read_resource("resources/stations.json")
+    return load_resource("stations.json")
 
 
 @pytest.fixture
 def mock_station_data():
     """Example response from station API"""
-    return read_resource("resources/station.json")
+    return load_resource("station.json")
 
 
 @pytest.fixture
 def mock_tidal_events_data():
     """Example response from tidal events API"""
-    return read_resource("resources/tidal_events.json")
+    return load_resource("tidal_events.json")
 
 
 @pytest.fixture
 def mock_tidal_events_partial_data():
     """Example response from tidal events API"""
-    return read_resource("resources/tidal_events_partial.json")
+    return load_resource("tidal_events_partial.json")
 
 
 @pytest.fixture
 def mock_height_data():
     """Example response from tidal height API"""
-    return read_resource("resources/height.json")
+    return load_resource("height.json")
 
 
 @pytest.fixture
 def mock_heights_data():
     """Example response from tidal heights API"""
-    return read_resource("resources/heights.json")
+    return load_resource("heights.json")
 
 @pytest_asyncio.fixture
 async def ukho_tides_client():
