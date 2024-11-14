@@ -13,6 +13,7 @@ from datetime import datetime
 
 
 def load_resource(filename):
+    """Load JSON from the resources directory"""
     pwd = os.path.abspath(os.path.dirname(__file__))
     file = os.path.join(pwd, 'resources', filename)
     with open(file) as f:
@@ -317,7 +318,7 @@ async def test_givenValidApiKey_whenRequestTidalHeights_thenReturnTidalHeights(u
 # Tidal Height
 @pytest.mark.asyncio
 @pytest.mark.parametrize("url, level",[
-    pytest.param("https://admiraltyapi.azure-api.net/uktidalapi/api/V1/Stations/0001/TidalEvents?duration=4",ApiLevel.Discovery),
+    pytest.param("https://admiraltyapi.azure-api.net/uktidalapi/api/V1/Stations/0001/TidalEvents?duration=4",ApiLevel.Discovery)
 ])
 async def test_givenValidApiKey_whenRequestTidalHeight_thenReturnTidalHeight(ukho_tides_client, mock_session, mock_tidal_events_partial_data, url, level):
     mock_session.get(
