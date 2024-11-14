@@ -24,11 +24,15 @@ class TidalEvent:
 
     @classmethod
     def from_dict(cls, data: dict) -> "TidalEvent":
-        return cls(
-            event_type = data["EventType"],
-            date_time = data["DateTime"],
-            height = data["Height"],
-        )
+        try:
+            return cls(
+                event_type = data["EventType"],
+                date_time = data["DateTime"],
+                height = data["Height"],
+            )
+        except KeyError:
+            return None
+
 
 @dataclass
 class TidalHeight:
@@ -39,7 +43,10 @@ class TidalHeight:
 
     @classmethod
     def from_dict(cls, data: dict) -> "TidalHeight":
-        return cls(
-            date_time = data["DateTime"],
-            height = data["Height"],
-        )
+        try:
+            return cls(
+                date_time = data["DateTime"],
+                height = data["Height"],
+            )
+        except KeyError:
+            return None

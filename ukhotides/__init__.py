@@ -19,7 +19,7 @@ class UkhoTides:
         self._session = session
         self._api_key = api_key
         self._api_level = api_level
-        
+
         if api_level == ApiLevel.Foundation:
             self._base_url = BASE_ENDPOINT + FOUNDATION_ENDPOINT
         elif api_level == ApiLevel.Premium:
@@ -41,9 +41,9 @@ class UkhoTides:
                 raise StationNotFoundError("Station not found")
             if resp.status != HTTPStatus.OK:
                 raise ApiError(f"Invalid response from API: {resp.status}")
-            
+
             _LOGGER.debug("Data retrieved from %s, status: %s", url, resp.status)
-            
+
             return await resp.json()
 
     async def async_get_stations(self, name: str = None) -> List[Station]:
@@ -53,7 +53,7 @@ class UkhoTides:
             url = url + "?name=" + name
 
         data = await self._async_get_data(url)
-        
+
         return [Station.from_dict(s) for s in data["features"]]
 
     async def async_get_station(self, station_id: str) -> Station:
@@ -68,9 +68,10 @@ class UkhoTides:
             url = url + "?duration=" + str(duration)
 
         data = await self._async_get_data(url)
+        events = [TidalEvent.from_dict(e) for e in data]
 
-        return [TidalEvent.from_dict(e) for e in data]
-        
+        return [e for e in events if e is not None]
+
     async def async_get_tidal_events_for_date_range(self, station_id: str, start_date: datetime, end_date: datetime) -> List[TidalEvent]:
         """Only available for premium subscriptions"""
 
@@ -79,8 +80,9 @@ class UkhoTides:
         url = url + "&EndDate=" + end_date.strftime("%Y-%m-%d")
 
         data = await self._async_get_data(url)
+        events = [TidalEvent.from_dict(e) for e in data]
 
-        return [TidalEvent.from_dict(e) for e in data]
+        return [e for e in events if e is not None]
 
     async def async_get_tidal_height(self, station_id: str, date_time: datetime) -> float:
         """Only available for premium subscriptions"""
@@ -101,5 +103,6 @@ class UkhoTides:
         url = url + "&IntervalInMinutes=" + str(interval)
 
         data = await self._async_get_data(url)
+        heights = [TidalHeight.from_dict(h) for h in data]
 
-        return [TidalHeight.from_dict(h) for h in data]
+        return [h for h in heights if h is not None]
