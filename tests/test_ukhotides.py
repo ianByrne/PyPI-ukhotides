@@ -59,8 +59,8 @@ def mock_tidal_events_data_fixture():
     return load_resource("tidal_events.json")
 
 
-@pytest.fixture
-def mock_tidal_events_partial_data():
+@pytest.fixture(name="mock_tidal_events_partial_data")
+def mock_tidal_events_partial_data_fixture():
     """Example response from tidal events API"""
     return load_resource("tidal_events_partial.json")
 

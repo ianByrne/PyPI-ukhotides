@@ -1,4 +1,11 @@
+"""Data classes"""
+
+# pylint: disable=missing-function-docstring
+
+from __future__ import annotations
+
 from dataclasses import dataclass
+
 
 @dataclass
 class Station:
@@ -8,7 +15,7 @@ class Station:
     name: str
 
     @classmethod
-    def from_dict(cls, data: dict) -> "Station":
+    def from_dict(cls, data: dict) -> Station:
         return cls(
             id = data["properties"]["Id"],
             name = data["properties"]["Name"],
@@ -23,7 +30,7 @@ class TidalEvent:
     height: float
 
     @classmethod
-    def from_dict(cls, data: dict) -> "TidalEvent":
+    def from_dict(cls, data: dict) -> TidalEvent | None:
         try:
             return cls(
                 event_type = data["EventType"],
@@ -42,7 +49,7 @@ class TidalHeight:
     height: float
 
     @classmethod
-    def from_dict(cls, data: dict) -> "TidalHeight":
+    def from_dict(cls, data: dict) -> TidalHeight | None:
         try:
             return cls(
                 date_time = data["DateTime"],

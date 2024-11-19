@@ -4,6 +4,8 @@ This package provides a client wrapper for the [Admiralty Tidal API](https://adm
 
 # Installation
 
+Install via [pip](https://pypi.org/project/ukhotides/).
+
 ```
 pip install ukhotides
 ```

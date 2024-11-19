@@ -1,3 +1,7 @@
+"""Exceptions"""
+
+# pylint: disable=missing-class-docstring
+
 class ApiError(Exception):
     def __init__(self, status):
         super().__init__(status)

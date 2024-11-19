@@ -1,12 +1,9 @@
 {
     "name": "UKHO Tides",
     "image": "mcr.microsoft.com/vscode/devcontainers/python:3.10",
-    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
-    "workspaceFolder": "/workspace",
     "customizations": {
         "vscode": {
             "settings": {
-                "python.pythonPath": "/usr/local/bin/python",
                 "editor.formatOnSave": true,
                 "editor.codeActionsOnSave": {
                     "source.organizeImports": "explicit"
@@ -16,10 +13,11 @@
                 "ms-python.python",
                 "ms-python.mypy-type-checker",
                 "ms-python.pylint",
-                "charliermarsh.ruff"
+                "charliermarsh.ruff",
+                "tamasfe.even-better-toml"
             ]
         }
     },
-    "postCreateCommand": "pip install --upgrade pip && pip install -r /workspace/ukhotides/requirements.txt && pip install -r /workspace/tests/requirements.txt",
+    "postCreateCommand": "curl -sSL https://install.python-poetry.org | python3 - && poetry install --with dev",
     "remoteUser": "vscode"
 }
