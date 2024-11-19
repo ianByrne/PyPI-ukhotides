@@ -1,0 +1,23 @@
+{
+    "name": "UKHO Tides",
+    "image": "mcr.microsoft.com/vscode/devcontainers/python:3.10",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "editor.formatOnSave": true,
+                "editor.codeActionsOnSave": {
+                    "source.organizeImports": "explicit"
+                }
+            },
+            "extensions": [
+                "ms-python.python",
+                "ms-python.mypy-type-checker",
+                "ms-python.pylint",
+                "charliermarsh.ruff",
+                "tamasfe.even-better-toml"
+            ]
+        }
+    },
+    "postCreateCommand": "curl -sSL https://install.python-poetry.org | python3 - && poetry install --with dev",
+    "remoteUser": "vscode"
+}

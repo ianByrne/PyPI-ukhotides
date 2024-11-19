@@ -1,20 +1,36 @@
-import json
+"""Client for the UKHO Tides API"""
+
+# pylint: disable=line-too-long
+
 import logging
+from datetime import datetime
+from http import HTTPStatus
+from typing import List, Optional
 
 from aiohttp import ClientSession
-from http import HTTPStatus
-from datetime import datetime
-from typing import List
 
-from .const import BASE_ENDPOINT, DISCOVERY_ENDPOINT, FOUNDATION_ENDPOINT, PREMIUM_ENDPOINT
+from .const import (
+    BASE_ENDPOINT,
+    DISCOVERY_ENDPOINT,
+    FOUNDATION_ENDPOINT,
+    PREMIUM_ENDPOINT,
+)
 from .dataclasses import Station, TidalEvent, TidalHeight
 from .enums import ApiLevel
-from .exceptions import ApiError, InvalidApiKeyError, ApiQuotaExceededError, TooManyRequestsError, StationNotFoundError
+from .exceptions import (
+    ApiError,
+    ApiQuotaExceededError,
+    InvalidApiKeyError,
+    StationNotFoundError,
+    TooManyRequestsError,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
 
 class UkhoTides:
+    """UKHO Tides"""
+
     def __init__(self, session: ClientSession, api_key: str, api_level: ApiLevel = ApiLevel.Discovery):
         self._session = session
         self._api_key = api_key
@@ -42,11 +58,13 @@ class UkhoTides:
             if resp.status != HTTPStatus.OK:
                 raise ApiError(f"Invalid response from API: {resp.status}")
 
-            _LOGGER.debug("Data retrieved from %s, status: %s", url, resp.status)
+            _LOGGER.debug("Data retrieved from %s, status: %s",
+                          url, resp.status)
 
             return await resp.json()
 
-    async def async_get_stations(self, name: str = None) -> List[Station]:
+    async def async_get_stations(self, name: Optional[str] = None) -> List[Station]:
+        """Return all stations, filtered by name"""
         url = self._base_url
 
         if name is not None:
@@ -57,11 +75,13 @@ class UkhoTides:
         return [Station.from_dict(s) for s in data["features"]]
 
     async def async_get_station(self, station_id: str) -> Station:
+        """Return a station by ID"""
         url = self._base_url + "/" + station_id
         data = await self._async_get_data(url)
         return Station.from_dict(data)
 
-    async def async_get_tidal_events(self, station_id: str, duration: int = None) -> List[TidalEvent]:
+    async def async_get_tidal_events(self, station_id: str, duration: Optional[int] = None) -> List[TidalEvent]:
+        """Return all tidal events for a station, filtered by duration"""
         url = self._base_url + "/" + station_id + "/TidalEvents"
 
         if duration is not None:
@@ -73,7 +93,7 @@ class UkhoTides:
         return [e for e in events if e is not None]
 
     async def async_get_tidal_events_for_date_range(self, station_id: str, start_date: datetime, end_date: datetime) -> List[TidalEvent]:
-        """Only available for premium subscriptions"""
+        """Return all tidal events for a station, filtered by date range. Only available for premium subscriptions"""
 
         url = self._base_url + "/" + station_id + "/TidalEventsForDateRange?"
         url = url + "StartDate=" + start_date.strftime("%Y-%m-%d %H:%M:%S")
@@ -85,7 +105,7 @@ class UkhoTides:
         return [e for e in events if e is not None]
 
     async def async_get_tidal_height(self, station_id: str, date_time: datetime) -> float:
-        """Only available for premium subscriptions"""
+        """Return the tidal height for a station at a given datetime. Only available for premium subscriptions"""
 
         url = self._base_url + "/" + station_id + "/TidalHeight?"
         url = url + "DateTime=" + date_time.strftime("%Y-%m-%d %H:%M:%S")
@@ -94,8 +114,8 @@ class UkhoTides:
 
         return data["Height"]
 
-    async def async_get_tidal_heights(self, station_id: str, start_date: datetime, end_date: datetime, interval: int) -> float:
-        """Only available for premium subscriptions"""
+    async def async_get_tidal_heights(self, station_id: str, start_date: datetime, end_date: datetime, interval: int) -> list[TidalHeight]:
+        """Return the tidal heights for a station between a date range. Only available for premium subscriptions"""
 
         url = self._base_url + "/" + station_id + "/TidalHeights?"
         url = url + "StartDateTime=" + start_date.strftime("%Y-%m-%d %H:%M:%S")

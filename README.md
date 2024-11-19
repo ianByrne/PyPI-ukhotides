@@ -4,6 +4,8 @@ This package provides a client wrapper for the [Admiralty Tidal API](https://adm
 
 # Installation
 
+Install via [pip](https://pypi.org/project/ukhotides/).
+
 ```
 pip install ukhotides
 ```
@@ -65,7 +67,19 @@ end_date = datetime(2020,1,1,2)
 heights = await client.async_get_tidal_heights("0001", start_date, end_date, interval_in_minutes)
 ```
 
+# Publish to PyPi
+
+Update the version number in `pyproject.toml` and then run:
+
+```sh
+poetry publish --build
+```
+
 # TODO
 
 - Better docs (sorry)
 - Webhooks to automate distribution and versioning
+
+# Attribution
+
+Contains ADMIRALTY® Tidal Data: © Crown copyright and database right
