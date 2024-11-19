@@ -67,6 +67,14 @@ end_date = datetime(2020,1,1,2)
 heights = await client.async_get_tidal_heights("0001", start_date, end_date, interval_in_minutes)
 ```
 
+# Publish to PyPi
+
+Update the version number in `pyproject.toml` and then run:
+
+```sh
+poetry publish --build
+```
+
 # TODO
 
 - Better docs (sorry)
