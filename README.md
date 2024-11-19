@@ -72,6 +72,7 @@ heights = await client.async_get_tidal_heights("0001", start_date, end_date, int
 Update the version number in `pyproject.toml` and then run:
 
 ```sh
+poetry config pypi-token.pypi $PYPI_TOKEN
 poetry publish --build
 ```
 
