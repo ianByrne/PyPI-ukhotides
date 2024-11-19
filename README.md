@@ -69,3 +69,7 @@ heights = await client.async_get_tidal_heights("0001", start_date, end_date, int
 
 - Better docs (sorry)
 - Webhooks to automate distribution and versioning
+
+# Attribution
+
+Contains ADMIRALTY® Tidal Data: © Crown copyright and database right

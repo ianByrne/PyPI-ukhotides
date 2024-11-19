@@ -1,0 +1,25 @@
+{
+    "name": "UKHO Tides",
+    "image": "mcr.microsoft.com/vscode/devcontainers/python:3.10",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+    "workspaceFolder": "/workspace",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "python.pythonPath": "/usr/local/bin/python",
+                "editor.formatOnSave": true,
+                "editor.codeActionsOnSave": {
+                    "source.organizeImports": "explicit"
+                }
+            },
+            "extensions": [
+                "ms-python.python",
+                "ms-python.mypy-type-checker",
+                "ms-python.pylint",
+                "charliermarsh.ruff"
+            ]
+        }
+    },
+    "postCreateCommand": "pip install --upgrade pip && pip install -r /workspace/ukhotides/requirements.txt && pip install -r /workspace/tests/requirements.txt",
+    "remoteUser": "vscode"
+}
